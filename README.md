@@ -1,2 +1,2 @@
-# chess-engine
-build a chess engine with machine learning
+# Machine Learning Chess Engine
+Goal: build a chess engine using different machine learning methods that easily beats me
