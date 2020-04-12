@@ -153,6 +153,7 @@ def evaluate_board(board, gamestat = "middle"):
 
 
 if __name__ == "__main__":
+    
     board = chess.Board()
     display(SVG(chess.svg.board(board=board,size=400)))
     
@@ -162,8 +163,9 @@ if __name__ == "__main__":
     board.push_san("Nf6")
     board.push_san("Ne5")
     
-    display(SVG(chess.svg.board(board=board,size=400)))    
-        
+    display(SVG(chess.svg.board(board=board,size=400)))        
     print(evaluate_board(board))
+    
+    
 
 
