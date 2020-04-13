@@ -32,7 +32,7 @@ def quiescence(board, alpha, beta):
         if board.is_capture(move):
             
             board.push(move)
-            score = -quiescence(board, alpha, beta)
+            score = -quiescence(board, -beta, -alpha)
             board.pop()
             
             if score >= beta:
@@ -42,9 +42,9 @@ def quiescence(board, alpha, beta):
     
     return alpha
 
-""" AlphaBeta pruning applied to MinMax search algorithm """ 
+""" AlphaBeta pruning applied to MiniMax search algorithm """ 
 
-def AlphaBeta(board, depth, alpha, beta, maximizer = True):
+def minimax(board, depth, alpha, beta, maximizer = True):
     
     
     if depth == 0:
@@ -56,8 +56,11 @@ def AlphaBeta(board, depth, alpha, beta, maximizer = True):
         
         for move in board.legal_moves:
             
+            if move == chess.Move.null():
+                continue
+            
             board.push(move)
-            move_eval = AlphaBeta(board, depth-1, alpha, beta, False)
+            move_eval = minimax(board, depth-1, alpha, beta, False)
             board.pop()
             maxvalue = max(maxvalue, move_eval)
             alpha = max(maxvalue, alpha)
@@ -74,7 +77,7 @@ def AlphaBeta(board, depth, alpha, beta, maximizer = True):
         for move in board.legal_moves:
             
             board.push(move)
-            move_eval = AlphaBeta(board, depth-1, alpha, beta, True)
+            move_eval = minimax(board, depth-1, alpha, beta, True)
             board.pop()
             minvalue = min(minvalue, move_eval)
             beta = min(minvalue, beta)
@@ -84,7 +87,8 @@ def AlphaBeta(board, depth, alpha, beta, maximizer = True):
             
         return minvalue
     
-def find_bestmove(board, depth):
+def minimax_move(board, depth):
+    
     bestmove = chess.Move.null()
     bestvalue = -np.inf
     alpha = -np.inf
@@ -93,7 +97,7 @@ def find_bestmove(board, depth):
     for move in board.legal_moves:
         
         board.push(move)
-        movevalue = AlphaBeta(board, depth-1, alpha, beta, maximizer=False)
+        movevalue = minimax(board, depth-1, alpha, beta, maximizer=False)
         
         if bestvalue < movevalue:
             bestvalue = movevalue
@@ -110,15 +114,15 @@ def find_bestmove(board, depth):
 
     
 if __name__ == "__main__":
-    board = chess.Board('rnbqkb1r/pppp1ppp/5n2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3')
+    board = chess.Board()
     
-    bestvalue = AlphaBeta(board, 4, -np.inf, np.inf, True)
+    bestvalue = minimax(board, 4, -np.inf, np.inf, True)
     print(bestvalue)
     
-    bestmove, value = find_bestmove(board, 4)
+    bestmove, value = minimax_move(board, 4)
     
     print(bestmove, value)
-    display(SVG(chess.svg.board(board=board,size=400)))
+    display(chess.svg.board(board=board,size=400))
             
         
         

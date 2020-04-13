@@ -11,11 +11,12 @@ Created on Mon Apr 13 17:42:15 2020
 
 import numpy as np
 import chess
-import chess.svgp
+import chess.svg
 
-from IPython.display import SVG, display
+from IPython.display import display
 from evaluate_board import evaluate_board
-from minmax_search import find_bestmove
+from minimax_search import minimax_move
+from negamax_search import negamax_move
 
 
 board = chess.Board()
@@ -23,7 +24,8 @@ board = chess.Board()
 
 print("your are playing white")
 print("you can 'type stopgame' to stop the game at any time")
-display(SVG(chess.svg.board(board=board,size=400)))
+print()
+display(chess.svg.board(board=board,size=400))
 game = True
 
 while game:
@@ -37,6 +39,10 @@ while game:
         continue
     if move == "stopgame":
         break
+    if len(move) < 4 or 5 < len(move):
+        print("input sequence must be of length 4 or 5, ex: e2e4")
+        print()
+        continue
     
     move = chess.Move.from_uci(move)
     
@@ -45,7 +51,7 @@ while game:
         continue
     
     board.push(move)
-    display(SVG(chess.svg.board(board=board,size=400)))
+    display(chess.svg.board(board=board,size=400))
     
     if board.is_game_over():
         print("the game is over")
@@ -60,15 +66,20 @@ while game:
         game = False
         break
     
-    engine_move, value = find_bestmove(board, 3)
-    print("the engine chose to resond with " + engine_move)
-    print("it expects the board value after 3 steps to be " + value)
+    print("the engine is working on it... ")
+    engine_move, value = negamax_move(board, 3)
+    print("the engine chose to resond with ")
+    print()
+    print(engine_move)
+    print()
+    print("it expects the board value 3 steps into the future to be " + str(value))
+    print()
     
     board.push(engine_move)
     if board.is_check():
         print("CHECK")
     
-    display(SVG(chess.svg.board(board=board,size=400)))
+    display(chess.svg.board(board=board,size=400))
     
     if board.is_game_over():
         print("the game is over")
