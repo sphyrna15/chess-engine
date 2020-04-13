@@ -7,7 +7,7 @@ Created on Sun Apr 12 20:24:29 2020
 """
 
 
-""" Implement MinMax Search Algorithm in Python for chess """
+""" Implement MinMax Search Algorithm with AlphaBeta pruning in Python for chess """
 
 import chess
 import chess.svg
@@ -17,11 +17,32 @@ from IPython.display import SVG, display
 from evaluate_board import evaluate_board
 
 
+
+""" Quiescence algorithm to avoid Horizon-Effect """
 def quiescence(board, alpha, beta):
     board_val = evaluate_board(board)
-    return board_val
+    
+    if board_val >= beta:
+        return beta
+    if alpha < board_val:
+        alpha = board_val
+    
+    for move in board.legal_moves:
+        
+        if board.is_capture(move):
+            
+            board.push(move)
+            score = -quiescence(board, alpha, beta)
+            board.pop()
+            
+            if score >= beta:
+                return beta
+            if score > alpha:
+                alpha = score
+    
+    return alpha
 
-
+""" AlphaBeta pruning applied to MinMax search algorithm """ 
 
 def AlphaBeta(board, depth, alpha, beta, maximizer = True):
     
@@ -63,8 +84,28 @@ def AlphaBeta(board, depth, alpha, beta, maximizer = True):
             
         return minvalue
     
-def find_bestmove(board, alpha, beta, maximizer):
-    return None
+def find_bestmove(board, depth):
+    bestmove = chess.Move.null()
+    bestvalue = -np.inf
+    alpha = -np.inf
+    beta = np.inf
+    
+    for move in board.legal_moves:
+        
+        board.push(move)
+        movevalue = AlphaBeta(board, depth-1, alpha, beta, maximizer=False)
+        
+        if bestvalue < movevalue:
+            bestvalue = movevalue
+            bestmove = move
+        
+        if movevalue > alpha:
+            alpha = movevalue
+        
+        board.pop()
+    
+    return bestmove, movevalue
+        
 
 
     
@@ -73,6 +114,10 @@ if __name__ == "__main__":
     
     bestvalue = AlphaBeta(board, 4, -np.inf, np.inf, True)
     print(bestvalue)
+    
+    bestmove, value = find_bestmove(board, 4)
+    
+    print(bestmove, value)
     display(SVG(chess.svg.board(board=board,size=400)))
             
         
