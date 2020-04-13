@@ -110,7 +110,7 @@ def find_bestmove(board, depth):
 
     
 if __name__ == "__main__":
-    board = chess.Board()
+    board = chess.Board('rnbqkb1r/pppp1ppp/5n2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3')
     
     bestvalue = AlphaBeta(board, 4, -np.inf, np.inf, True)
     print(bestvalue)
