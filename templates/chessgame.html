@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+
+    <title>Chess</title>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/chessboard-1.0.0.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+
+  </head>
+  <body>
+      <h3>chessboard not showing up</h3>
+
+      <div id="board" style="width: 400px"></div>
+      <script>
+        var board = ChessBoard('board', 'rnbqkb1r/pppp1ppp/5n2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3')
+      </script>
+
+      <button id="startBtn">Start Position</button>
+      <script>>
+          $('#startBtn').on('click', board.start)          
+      </script>
+
+  </body>
+</html>
