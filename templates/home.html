@@ -14,12 +14,21 @@
 
 <body>
 
-    <h2>Tim Launer Homepage</h2>
+    <h3>My Homepage</h3>
     
-    <p>Well, I'm not really into web developement, so please excuse this layout</p>
+    <p>Well, I'm not really into web developement, so please excuse this layout.</p>
 
-    
-    <p>Excuse my webskillz...</p>
+    <ul>
+        <li>If you are intersted in my projects, check out my <a href="https://github.com/sphyrna15"> Github</a>!</li>
+        <li>If you want to play a game of chess against my engines, click <a href="{{ url_for('chessgame') }}">here</a>!</li>
+    </ul>
+
+    <p></p>
+    <p>Just remember one thing: </p>
+    <p></p>
+    <h5>Sharks are <i>AWESOME</i>!!</h5>
+    <img src="{{ url_for('static', filename='/img/tigershark.jpeg') }}" alt="Tigershark" style="width:600px">
+    <p>Apex predator, not a monster</p>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

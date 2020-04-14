@@ -10,17 +10,40 @@
 
   </head>
   <body>
-      <h3>chessboard not showing up</h3>
+      <h3>Game of Chess</h3>
+      <p>
+
+        You can push a piece just by typing its current position,
+        followed by where you want it to go. Say you have a knight on f3, 
+        and you want to move it to e5:
+      </p>
+      <p>
+        Type 'f3e5' to push the knight. A piece in e5 would automatically be captured!
+      </p>
 
       <div id="board" style="width: 400px"></div>
       <script>
-        var board = ChessBoard('board', 'rnbqkb1r/pppp1ppp/5n2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3')
+        var fen_string = '{{data.fen}}';
+        var board = ChessBoard('board', fen_string)
       </script>
 
-      <button id="startBtn">Start Position</button>
-      <script>>
-          $('#startBtn').on('click', board.start)          
-      </script>
+      <p></p>
+      <p>The engines last move was <b>{{data.engine_move}}</b></p>
+      <p></p>
+      <p>{{ data.status }}</p>
+      <p></p>
+
+      <form method="POST">
+        <input name="move">
+        <input type="submit" value="YOUR MOVE">
+      </form>
+      <p></p>
+      <a href="/undo_move"><input type="button" value="UNDO MOVE"></a>
+      <p></p>
+      <a href="/stop_and_reset"><input type="button" value="STOP game / RESET position"></a>
+      
+
+      
 
   </body>
 </html>
