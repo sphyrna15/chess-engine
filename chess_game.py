@@ -57,11 +57,13 @@ def get_move():
     if len(move) < 4 or 5 < len(move):
         data['status'] = 'Input sequnce must have 4 or 5 characters, example: e2e4'
         return render_template('chessgame.html', data = data) 
-
+    
     move = chess.Move.from_uci(move)
 
     if move not in board.legal_moves:
-        data['status'] = "sorry, that is not a legal move in this position, try again"
+        data['status'] = "sorry, that is not a legal move in this position, try again..."
+        return render_template('chessgame.html', data = data)
+    
     board.push(move)
     fen_rep = board.fen()
     data['fen'] = fen_rep
