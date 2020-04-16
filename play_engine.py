@@ -66,12 +66,13 @@ while game:
         game = False
         break
     
+    print()
     print("the engine is working on it... ")
     engine_move, value = negamax_move(board, 3)
     print("the engine chose to resond with ")
     print()
     print(engine_move)
-    print()
+    print()    
     print("it expects the board value 3 steps into the future to be " + str(value))
     print()
     

@@ -20,6 +20,7 @@ from evaluate_board import evaluate_board
 
 """ Quiescence algorithm to avoid Horizon-Effect """
 def quiescence(board, alpha, beta):
+    
     board_val = evaluate_board(board)
     
     if board_val >= beta:
@@ -50,11 +51,20 @@ def minimax(board, depth, alpha, beta, maximizer = True):
     if depth == 0:
         return quiescence(board, alpha, beta)
     
+    movelist = []
+    
+    for move in board.legal_moves:
+        
+        if board.is_capture(move):
+            movelist.insert(0, move)
+        else:
+            movelist.append(move)
+    
     if maximizer:
         
         maxvalue = -np.inf
         
-        for move in board.legal_moves:
+        for move in movelist:
             
             if move == chess.Move.null():
                 continue
@@ -74,7 +84,7 @@ def minimax(board, depth, alpha, beta, maximizer = True):
         
         minvalue = np.inf
         
-        for move in board.legal_moves:
+        for move in movelist:
             
             board.push(move)
             move_eval = minimax(board, depth-1, alpha, beta, True)
@@ -93,8 +103,16 @@ def minimax_move(board, depth):
     bestvalue = -np.inf
     alpha = -np.inf
     beta = np.inf
+    movelist = []
     
     for move in board.legal_moves:
+        
+        if board.is_capture(move):
+            movelist.insert(0, move)
+        else:
+            movelist.append(move)
+    
+    for move in movelist:
         
         board.push(move)
         movevalue = minimax(board, depth-1, alpha, beta, maximizer=False)
@@ -108,7 +126,7 @@ def minimax_move(board, depth):
         
         board.pop()
     
-    return bestmove, movevalue
+    return bestmove, bestvalue
         
 
 

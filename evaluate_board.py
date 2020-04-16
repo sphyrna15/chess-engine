@@ -142,10 +142,15 @@ def evaluate_board(board, gamestat = "middle"):
     
     boardvalue = pawnsvalue + knightsvalue + bishopsvalue + rooksvalue + queensvalue + kingsvalue
     
-    if board.turn:
-        return boardvalue
-    else:
-        return -boardvalue
+    
+    # brobably should be 
+    return boardvalue
+
+    # and NOT this:
+    # if board.turn:
+    #     return boardvalue
+    # else:
+    #     return -boardvalue
     
     
     
