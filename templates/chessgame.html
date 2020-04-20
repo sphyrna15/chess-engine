@@ -8,8 +8,40 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
 
+    <style>
+      a{ display: inline-block; }
+      .main{
+        position: absolute;
+        top : 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background-color: rgb(146, 211, 236);
+      }
+      .button{
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgb(84, 177, 89);
+        cursor: pointer;
+      }
+      .move{
+        position: relative;
+        left: 80%;
+        transform: translateX(-50%);
+      }
+      .board{
+        position: relative;
+        top: 100%%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      
+    </style>
+
   </head>
   <body>
+    <div class='bg'></div>
+    <div class='main'>
       <h3>Game of Chess</h3>
       <p>
 
@@ -21,7 +53,7 @@
         Type 'f3e5' to push the knight. A piece in e5 would automatically be captured!
       </p>
 
-      <div id="board" style="width: 400px"></div>
+      <div class='board' id="board" style="width: 400px"></div>
       <script>
         var fen_string = '{{data.fen}}';
         var board = ChessBoard('board', fen_string)
@@ -33,17 +65,15 @@
       <p>{{ data.status }}</p>
       <p></p>
 
-      <form method="POST">
+      <form class='move' method="POST">
         <input name="move">
         <input type="submit" value="YOUR MOVE">
       </form>
       <p></p>
-      <a href="/undo_move"><input type="button" value="UNDO MOVE"></a>
+      <a class='button' href="/undo_move"><input type="button" value="UNDO MOVE"></a>
       <p></p>
-      <a href="/stop_and_reset"><input type="button" value="STOP game / RESET position"></a>
+      <a class='button' href="/stop_and_reset"><input type="button" value="STOP game / RESET position"></a>
+    </div>
       
-
-      
-
   </body>
 </html>

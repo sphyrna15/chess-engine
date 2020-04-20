@@ -13,6 +13,7 @@ import time
 
 from IPython.display import SVG, display
 from negamax_search import negamax_move
+from negamax_search import find_bestmove
 
 app = Flask(__name__)
 board = chess.Board()
@@ -70,11 +71,11 @@ def get_move():
     data['status'] = 'Please wait for the engine to make a move...'
     render_template('chessgame.html', data = data)
 
-    bestmove, value = negamax_move(board, depth)
+    bestmove = find_bestmove(board, depth)
     board.push(bestmove)
     fen_rep = board.fen()
     data['fen'] = fen_rep
-    data['status'] = 'It expects the boardvalue '+str(depth)+' moves into the future to be '+str(value) 
+    data['status'] = 'It expects the boardvalue '+str(depth)+' moves into the future to be NOT AVAILABLE' # +str(value) 
     data['engine_move'] = str(bestmove)
 
     return render_template('chessgame.html' , data = data)
